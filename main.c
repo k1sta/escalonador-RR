@@ -8,7 +8,7 @@ gcc aoksdjasi odjasd
 #include <stdbool.h>
 #include "universal.h"
 //PID, Tempo_Entrada, Tempo_Execução, Qntd_IOs, Tipo_IO, Inicio, Tempo_IO
-//Consideramos o valor da fatia como 1 seg, ou seja, uma iteração do for
+//Consideramos o valor da fatia como 3 iterações do loop.
 
 #define ARQ_INPUT "input.txt"
 
