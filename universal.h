@@ -10,6 +10,7 @@ typedef struct {
     char tipo; // Fita magnética (F) | Disco (D) | Impressora (I)
     int inicio;
     int tempoExec;
+    int tempoExecRestante;
 } IO;
 
 typedef struct {
@@ -53,6 +54,6 @@ int lerProcessos(const char* arqNome, Processo** processos, int numProcessos);
 
 void imprimirTabelaProcessos(Processo* processos, int numProcessos);
 
-void imprimirTabelaIO(Processo* processos, int numProcessos)
+void imprimirTabelaIO(Processo* processos, int numProcessos);
 
 #endif

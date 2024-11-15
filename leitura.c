@@ -67,7 +67,9 @@ int lerProcessos(const char* arqNome, Processo** processos, int numProcessos){
             for (int j = 0; j < numIO; j++) {
                 sscanf(linha_io, "%c %d %d", &((*processos)[i].ios[j].tipo), &((*processos)[i].ios[j].inicio), &((*processos)[i].ios[j].tempoExec));
                 //printf("%c %d %d\n", (*processos)[i].ios[j].tipo, (*processos)[i].ios[j].inicio, (*processos)[i].ios[j].tempoExec); // DEBUG
-                for (int k = 0; k < 3; k++)
+               	(*processos)[i].ios[j].tempoExecRestante = (*processos)[i].ios[j].tempoExec;
+
+		for (int k = 0; k < 3; k++)
                     linha_io = strchr(linha_io, ' ') + 1;
 
             }

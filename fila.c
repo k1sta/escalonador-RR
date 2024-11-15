@@ -10,7 +10,7 @@ void initFila(FILA* f)
     f->fim = NULL;
 }
 
-bool inserirFila(FILA* f, int chaveNova)
+bool inserirFila(FILA* f, Processo* chaveNova)
 {
     Elemento* novo = (Elemento*)malloc(sizeof(Elemento));
     
@@ -35,7 +35,7 @@ bool inserirFila(FILA* f, int chaveNova)
     return true;
 }
 
-int removerFila(FILA *f)
+Processo* removerFila(FILA *f)
 {
     Elemento* aux = f->inicio;
     if (!aux->prox){
@@ -44,7 +44,7 @@ int removerFila(FILA *f)
         f->inicio = aux->prox;
     }
 
-    int pid = aux->chave;
+    Processo* pid = aux->chave;
     free(aux);
     return pid;
 }
