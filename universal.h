@@ -16,13 +16,15 @@ typedef struct {
     int PID;
     int tempoEntrada;
     int tempoExec;
+    int tempoExecRestante;
     int qntdIO;
+    int proxIO;
     IO* ios;
 } Processo;
 
 // Estruturas para 
 typedef struct{
-    int chave;
+Processo* chave;
     struct Elemento* prox;
 } Elemento;
 
@@ -43,9 +45,14 @@ void deletarFila(FILA *f);
 
 // funções para a leitura 
 
-
 int contarLinhas(const char* arqNome);
 
 int lerProcessos(const char* arqNome, Processo** processos, int numProcessos);
+
+// funções para a impressão
+
+void imprimirTabelaProcessos(Processo* processos, int numProcessos);
+
+void imprimirTabelaIO(Processo* processos, int numProcessos)
 
 #endif

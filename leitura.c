@@ -51,6 +51,10 @@ int lerProcessos(const char* arqNome, Processo** processos, int numProcessos){
         //printf("Entrando no processo %d\n", i+1); // DEBUG
         int numIO;
         sscanf(linha, "%d %d %d %d", &((*processos)[i].PID), &((*processos)[i].tempoEntrada), &((*processos)[i].tempoExec), &numIO);
+	(*processos)[i].tempoExecRestante = (*processos)[i].tempoExec;
+	(*processos)[i].proxIO = 0;
+
+
 
         // Aloca os IO's
         (*processos)[i].ios = (IO*)malloc(numIO * sizeof(IO));
