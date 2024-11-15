@@ -153,7 +153,7 @@ int main(void){
 		printf("Processo em Execucao: %s\n", processoEmExecucao ? "EXECUTING" : "NONE");
 
 	    t++;
-		printf("%s", "|-------------------------------------------------------------------------------\n");
+		printf("%s", "--------------------------------------------------------------------------------\n");
     }
 
 	printf("ACABOU BOA SORTE");
