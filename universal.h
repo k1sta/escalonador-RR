@@ -24,12 +24,12 @@ typedef struct {
 } Processo;
 
 // Estruturas para 
-typedef struct{
-Processo* chave;
+typedef struct Elemento {
+    Processo* chave;
     struct Elemento* prox;
 } Elemento;
 
-typedef struct{
+typedef struct FILA{
     Elemento* inicio;
     Elemento* fim;
 } FILA;
@@ -38,9 +38,9 @@ typedef struct{
 
 void initFila(FILA* f);
 
-bool inserirFila(FILA* f, int chaveNova);
+bool inserirFila(FILA* f, Processo* chaveNova);
 
-void removerFila(FILA *f);
+Processo* removerFila(FILA *f);
 
 void deletarFila(FILA *f);
 

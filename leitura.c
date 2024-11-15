@@ -36,7 +36,7 @@ int lerProcessos(const char* arqNome, Processo** processos, int numProcessos){
     // cria vetor de processos
     *processos = (Processo*)malloc(numProcessos * sizeof(Processo));
     if (!processos) {
-            perror("Erro ao alocar memória para oS processoS.\n");
+            perror("Erro ao alocar memória para os processos.\n");
             fclose(arq);
             return -3;
         }
@@ -51,8 +51,8 @@ int lerProcessos(const char* arqNome, Processo** processos, int numProcessos){
         //printf("Entrando no processo %d\n", i+1); // DEBUG
         int numIO;
         sscanf(linha, "%d %d %d %d", &((*processos)[i].PID), &((*processos)[i].tempoEntrada), &((*processos)[i].tempoExec), &numIO);
-	(*processos)[i].tempoExecRestante = (*processos)[i].tempoExec;
-	(*processos)[i].proxIO = 0;
+        (*processos)[i].tempoExecRestante = (*processos)[i].tempoExec;
+        (*processos)[i].proxIO = 0;
 
 
 

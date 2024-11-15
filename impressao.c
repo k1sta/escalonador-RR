@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include "universal.h"
 
 void imprimirTabelaProcessos(Processo* processos, int numProcessos) {

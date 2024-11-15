@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
 #include "universal.h"
 
@@ -37,6 +38,9 @@ bool inserirFila(FILA* f, Processo* chaveNova)
 
 Processo* removerFila(FILA *f)
 {
+    if (f->inicio == NULL){
+        return NULL;
+    }
     Elemento* aux = f->inicio;
     if (!aux->prox){
         f->inicio = NULL;
