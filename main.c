@@ -9,7 +9,7 @@
 // TESTANDO COM O INPUT3.TXT, REPAREI QUE O CÓDIGO ESTÁ ERRADO! Estamos terminando a execução no segundo seguinte. Portanto, todos os processos estão rodando
 // 1 segundo a mais do que deveriam. INVESTIGAR.
 
-#define ARQ_INPUT "input3.txt"
+#define ARQ_INPUT "input2.txt"
 #define TIME_SLICE 4
 
 int main(void){
@@ -19,6 +19,7 @@ int main(void){
     FILA* filaDiscoIO = NULL;
     FILA* filaFitaIO = NULL;
     FILA* filaImpressoraIO = NULL;
+	// Declarando variáveis relacionadas ao processo
     Processo* listaProcessos = NULL;
     int numProcessos;
 	
@@ -41,9 +42,11 @@ int main(void){
 	}
 
 
-	// variáveis auxiliares para o while
+	// Variáveis auxiliares para o While
     int t = 0, processosConcluidos = 0, inicioQuantum = 0;
     Processo* processoEmExecucao = NULL;
+
+	// Escalonador rodando
     while(processosConcluidos < numProcessos){
 		printf("Segundo %d-%d:\n", t, t+1);
 	    // 1. verificar se chegam processos novos (Alta prioridade)

@@ -9,7 +9,6 @@
 typedef struct {
     char tipo; // Fita magnética (F) | Disco (D) | Impressora (I)
     int inicio;
-    int tempoExec;
     int tempoExecRestante;
 } IO;
 
