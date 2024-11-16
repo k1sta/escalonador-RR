@@ -55,4 +55,6 @@ void imprimirTabelaProcessos(Processo* processos, int numProcessos);
 
 void imprimirTabelaIO(Processo* processos, int numProcessos);
 
+void printEstadoDaFila(FILA* filaAltaP, FILA* filaBaixaP, FILA* filaDiscoIO, FILA* filaFitaIO, FILA* filaImpressoraIO, Processo* processoEmExecucao);
+
 #endif

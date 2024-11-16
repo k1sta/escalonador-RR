@@ -35,3 +35,82 @@ void imprimirTabelaIO(Processo* processos, int numProcessos) {
     printf("|---------------------------------------------------------------------|\n");
     printf("\n\n\n");
 }
+
+void printEstadoDaFila(FILA* filaAltaP, FILA* filaBaixaP, FILA* filaDiscoIO, FILA* filaFitaIO, FILA* filaImpressoraIO, Processo* processoEmExecucao) {
+    printf("\n\n");
+    printf(" _______________________________________________________________________________\n");
+    printf("|                              Estado das Filas                                 |\n");
+    printf("|-------------------------------------------------------------------------------|\n");
+    
+    // Print High Priority Queue
+    printf("| Fila de Alta Prioridade:\t");
+    Elemento* current = filaAltaP->inicio;
+    while (current != NULL) {
+        printf("[P%d (Tempo Restante: %d)] ", current->chave->PID, current->chave->tempoExecRestante);
+        current = current->prox;
+    }
+    if (filaAltaP->inicio == NULL) {
+        printf("VAZIA");
+    }
+    printf("\n");
+
+    // Print Low Priority Queue
+    printf("| Fila de Baixa Prioridade:\t");
+    current = filaBaixaP->inicio;
+    while (current != NULL) {
+        printf("[P%d (Tempo Restante: %d)] ", current->chave->PID, current->chave->tempoExecRestante);
+        current = current->prox;
+    }
+    if (filaBaixaP->inicio == NULL) {
+        printf("VAZIA");
+    }
+    printf("\n");
+
+    // Print Disk IO Queue
+    printf("| Fila de IO do Disco:\t\t");
+    current = filaDiscoIO->inicio;
+    while (current != NULL) {
+        printf("[P%d (Tempo de IO: %d)] ", current->chave->PID, current->chave->ios[current->chave->proxIO].tempoExecRestante);
+        current = current->prox;
+    }
+    if (filaDiscoIO->inicio == NULL) {
+        printf("VAZIA");
+    }
+    printf("\n");
+
+    // Print Tape IO Queue
+    printf("| Fila de IO da Fita:\t\t");
+    current = filaFitaIO->inicio;
+    while (current != NULL) {
+        printf("[P%d (Tempo de IO: %d)] ", current->chave->PID, current->chave->ios[current->chave->proxIO].tempoExecRestante);
+        current = current->prox;
+    }
+    if (filaFitaIO->inicio == NULL) {
+        printf("VAZIA");
+    }
+    printf("\n");
+
+    // Print Printer IO Queue
+    printf("| Fila de IO da Impressora:\t");
+    current = filaImpressoraIO->inicio;
+    while (current != NULL) {
+        printf("[P%d (Tempo de IO: %d)] ", current->chave->PID, current->chave->ios[current->chave->proxIO].tempoExecRestante);
+        current = current->prox;
+    }
+    if (filaImpressoraIO->inicio == NULL) {
+        printf("VAZIA");
+    }
+    printf("\n");
+    // Print Process in Execution
+    printf("|-------------------------------------------------------------------------------|\n");
+    printf("| Process in Execution: ");
+    if (processoEmExecucao != NULL) {
+        printf("[P%d (Tempo restante: %d)]", processoEmExecucao->PID, processoEmExecucao->tempoExecRestante);
+    } else {
+        printf("NONE");
+    }
+    printf("\n");
+    printf(" -------------------------------------------------------------------------------\n");
+    printf("\n\n");
+
+}

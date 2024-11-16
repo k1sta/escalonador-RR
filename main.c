@@ -150,19 +150,21 @@ int main(void){
 				processoEmExecucao = NULL;
 			}
 		}
-
+		
+		/*
 		printf("Fila de Alta Prioridade: %s\n", filaAltaP->inicio ? "TEM GENTE" : "VAZIA");
 		printf("Fila de Baixa Prioridade: %s\n", filaBaixaP->inicio ? "TEM GENTE" : "VAZIA");
 		printf("Fila de IO do Disco: %s\n", filaDiscoIO->inicio ? "TEM GENTE" : "VAZIA");
 		printf("Fila de IO da Fita: %s\n", filaFitaIO->inicio ? "TEM GENTE" : "VAZIA");
 		printf("Fila de IO da Impressora %s\n", filaImpressoraIO->inicio ? "TEM GENTE" : "VAZIA");
 		printf("Processo em Execucao: %s\n", processoEmExecucao ? "EXECUTING" : "NONE");
+		*/
+		printEstadoDaFila(filaAltaP, filaBaixaP, filaDiscoIO, filaFitaIO, filaImpressoraIO, processoEmExecucao);
 
 	    t++;
 		printf("%s", "--------------------------------------------------------------------------------\n");
     }
 
-	printf("ACABOU BOA SORTE");
     
 	
 	// Removendo filas e listas
