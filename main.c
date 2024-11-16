@@ -45,7 +45,7 @@ int main(void){
     int t = 0, processosConcluidos = 0, inicioQuantum = 0;
     Processo* processoEmExecucao = NULL;
     while(processosConcluidos < numProcessos){
-		printf("Segundo %d:\n", t);
+		printf("Segundo %d-%d:\n", t, t+1);
 	    // 1. verificar se chegam processos novos (Alta prioridade)
 	    for (int i = 0; i < numProcessos; i++){
 		    if (listaProcessos[i].tempoEntrada == t){
@@ -84,9 +84,8 @@ int main(void){
 		    }
 		    if(filaFitaIO->inicio != NULL)
 				filaFitaIO->inicio->chave->ios[filaFitaIO->inicio->chave->proxIO].tempoExecRestante--;
-	    }
-	    
-	    
+	    } 
+
 	    // 3. verificar se há processo em execução
 	    if (processoEmExecucao == NULL){
 			processoEmExecucao = removerFila(filaAltaP);
@@ -102,19 +101,20 @@ int main(void){
 	    }
 
 		if (processoEmExecucao != NULL){
+            
+    		processoEmExecucao->tempoExecRestante--;
 
-			// 5. verificar se esse processo acabou a execução
-			if (processoEmExecucao->tempoExecRestante == 0){
+            // 4. verificar se esse processo acabou a execução
+		    if (processoEmExecucao->tempoExecRestante == 0){
 				printf("Processo %d terminou sua execucao.\n", processoEmExecucao->PID);
 				processosConcluidos++;
 				processoEmExecucao = NULL;
-			} else{
-				processoEmExecucao->tempoExecRestante--;
+		    } else{
 				printf("Processo %d possui %d segundos restantes de execucao.\n", processoEmExecucao->PID, processoEmExecucao->tempoExecRestante);
-			}
+		    }	
 	
 
-	    	// 4. verificar se esse processo sofre IO no instante n da execução do processo
+	    	// 5. verificar se esse processo sofre IO no instante n da execução do processo
 			if(processoEmExecucao != NULL){
 				if(processoEmExecucao->qntdIO > processoEmExecucao->proxIO){
 					printf("Processo %d possui %d io's restantes (momento %d do processo)\n", processoEmExecucao->PID, processoEmExecucao->qntdIO - processoEmExecucao->proxIO, processoEmExecucao->tempoExec - processoEmExecucao->tempoExecRestante);
@@ -131,15 +131,13 @@ int main(void){
 							case 'D':
 								inserirFila(filaDiscoIO, processoEmExecucao);
 								printf("Inserindo processo %d na fila de IO da Disco\n", processoEmExecucao->PID);
-								break;if (filaAltaP == NULL || filaBaixaP == NULL || filaDiscoIO == NULL || filaFitaIO == NULL || filaImpressoraIO == NULL) {
-        printf("Erro ao alocar memória para as filas.\n");
-        return -1;
-    }
-						}
-						processoEmExecucao = NULL;
-					}
-				}	
+								break;    
+                        }
+					processoEmExecucao = NULL;
+                    
+                }
 			}
+            }	
 
 
 			// 6. verificar se esse processo sofre preempção no instante t (se sim, entra em Baixa Prioridade)
