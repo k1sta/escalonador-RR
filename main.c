@@ -6,7 +6,7 @@
 
 //Consideramos o valor da fatia como 3 iterações do loop.
 
-#define ARQ_INPUT "input copy.txt"
+#define ARQ_INPUT "input2.txt"
 #define TIME_SLICE 4
 
 int main(void){
