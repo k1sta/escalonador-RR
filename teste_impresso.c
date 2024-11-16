@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include "universal.h"
 
-#define ARQ_INPUT "input.txt"
+#define ARQ_INPUT "input3.txt"
 
 int main(void){
     Processo* listaProcessos = NULL;

@@ -6,27 +6,29 @@
 
 //Consideramos o valor da fatia como 3 iterações do loop.
 
-#define ARQ_INPUT "input2.txt"
+// TESTANDO COM O INPUT3.TXT, REPAREI QUE O CÓDIGO ESTÁ ERRADO! Estamos terminando a execução no segundo seguinte. Portanto, todos os processos estão rodando
+// 1 segundo a mais do que deveriam. INVESTIGAR.
+
+#define ARQ_INPUT "input3.txt"
 #define TIME_SLICE 4
 
 int main(void){
     // Declarando filas
-    FILA* filaAltaP = (FILA*)malloc(sizeof(FILA));
-    FILA* filaBaixaP = (FILA*)malloc(sizeof(FILA));
-    FILA* filaDiscoIO = (FILA*)malloc(sizeof(FILA));
-    FILA* filaFitaIO = (FILA*)malloc(sizeof(FILA));
-    FILA* filaImpressoraIO = (FILA*)malloc(sizeof(FILA));
+    FILA* filaAltaP = NULL;
+    FILA* filaBaixaP = NULL;
+    FILA* filaDiscoIO = NULL;
+    FILA* filaFitaIO = NULL;
+    FILA* filaImpressoraIO = NULL;
     Processo* listaProcessos = NULL;
     int numProcessos;
-
-    if (filaAltaP == NULL || filaBaixaP == NULL || filaDiscoIO == NULL || filaFitaIO == NULL || filaImpressoraIO == NULL) {
-        printf("Erro ao alocar memória para as filas.\n");
-        return -1;
-    }
-
+	
     // Inicializando filas
-    initFila(filaAltaP); initFila(filaBaixaP); initFila(filaDiscoIO); initFila(filaFitaIO); initFila(filaImpressoraIO);
-
+    initFila(&filaAltaP);
+	initFila(&filaBaixaP);
+	initFila(&filaDiscoIO);
+	initFila(&filaFitaIO);
+	initFila(&filaImpressoraIO);
+	
     // Inicializando lista absoluta de processos e pegando o número de procesos
     numProcessos = contarLinhas(ARQ_INPUT);
     if (numProcessos < 0) {
@@ -129,7 +131,10 @@ int main(void){
 							case 'D':
 								inserirFila(filaDiscoIO, processoEmExecucao);
 								printf("Inserindo processo %d na fila de IO da Disco\n", processoEmExecucao->PID);
-								break;
+								break;if (filaAltaP == NULL || filaBaixaP == NULL || filaDiscoIO == NULL || filaFitaIO == NULL || filaImpressoraIO == NULL) {
+        printf("Erro ao alocar memória para as filas.\n");
+        return -1;
+    }
 						}
 						processoEmExecucao = NULL;
 					}
@@ -157,8 +162,14 @@ int main(void){
     }
 
 	printf("ACABOU BOA SORTE");
-    // Removendo filas e listas
-    deletarFila(filaAltaP); deletarFila(filaBaixaP); deletarFila(filaDiscoIO); deletarFila(filaFitaIO); deletarFila(filaImpressoraIO);
+    
+	
+	// Removendo filas e listas
+    deletarFila(filaAltaP); 
+	deletarFila(filaBaixaP);
+	deletarFila(filaDiscoIO);
+	deletarFila(filaFitaIO);
+	deletarFila(filaImpressoraIO);
     for (int i = 0; i < numProcessos; i++) {
         free(listaProcessos[i].ios);
     }

@@ -36,7 +36,7 @@ typedef struct FILA{
 
 // funções para as filas
 
-void initFila(FILA* f);
+void initFila(FILA** f);
 
 bool inserirFila(FILA* f, Processo* chaveNova);
 

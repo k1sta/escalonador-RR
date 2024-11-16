@@ -4,11 +4,16 @@
 #include "universal.h"
 
 
-void initFila(FILA* f)
+void initFila(FILA** f)
 {
+    if (!*f) {
+        *f = (FILA*) malloc (sizeof(FILA));
+        if (!*f) printf("Erro na alocação da fila");
+    }
+    
     // inicia os vetores da fila como nulo
-    f->inicio = NULL;
-    f->fim = NULL;
+    (*f)->inicio = NULL;
+    (*f)->fim = NULL;
 }
 
 bool inserirFila(FILA* f, Processo* chaveNova)
