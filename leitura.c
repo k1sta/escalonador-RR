@@ -32,14 +32,6 @@ int lerProcessos(const char* arqNome, Processo** processos, int numProcessos){
         perror("Erro ao abrir o arquivo");
         return -2;
     }  
-    
-    // cria vetor de processos
-    *processos = (Processo*)malloc(numProcessos * sizeof(Processo));
-    if (!processos) {
-            perror("Erro ao alocar memória para os processos.\n");
-            fclose(arq);
-            return -3;
-        }
 
     // cria o vetor de char para as linhas e despreza o cabeçalho
     char linha[TAM_MAX_LINHA];

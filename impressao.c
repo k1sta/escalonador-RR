@@ -46,7 +46,7 @@ void printEstadoDaFila(FILA* filaAltaP, FILA* filaBaixaP, FILA* filaDiscoIO, FIL
     printf("| Fila de Alta Prioridade:\t");
     Elemento* current = filaAltaP->inicio;
     while (current != NULL) {
-        printf("[P%d (Tempo Restante: %d)] ", current->chave->PID, current->chave->tempoExecRestante);
+        printf("[P%d (Resta: %d)] ", current->chave->PID, current->chave->tempoExecRestante);
         current = current->prox;
     }
     if (filaAltaP->inicio == NULL) {
@@ -58,7 +58,7 @@ void printEstadoDaFila(FILA* filaAltaP, FILA* filaBaixaP, FILA* filaDiscoIO, FIL
     printf("| Fila de Baixa Prioridade:\t");
     current = filaBaixaP->inicio;
     while (current != NULL) {
-        printf("[P%d (Tempo Restante: %d)] ", current->chave->PID, current->chave->tempoExecRestante);
+        printf("[P%d (Resta: %d)] ", current->chave->PID, current->chave->tempoExecRestante);
         current = current->prox;
     }
     if (filaBaixaP->inicio == NULL) {
@@ -70,7 +70,7 @@ void printEstadoDaFila(FILA* filaAltaP, FILA* filaBaixaP, FILA* filaDiscoIO, FIL
     printf("| Fila de IO do Disco:\t\t");
     current = filaDiscoIO->inicio;
     while (current != NULL) {
-        printf("[P%d (Tempo de IO: %d)] ", current->chave->PID, current->chave->ios[current->chave->proxIO].tempoExecRestante);
+        printf("[P%d (Resta: %d)] ", current->chave->PID, current->chave->ios[current->chave->proxIO].tempoExecRestante);
         current = current->prox;
     }
     if (filaDiscoIO->inicio == NULL) {
@@ -82,7 +82,7 @@ void printEstadoDaFila(FILA* filaAltaP, FILA* filaBaixaP, FILA* filaDiscoIO, FIL
     printf("| Fila de IO da Fita:\t\t");
     current = filaFitaIO->inicio;
     while (current != NULL) {
-        printf("[P%d (Tempo de IO: %d)] ", current->chave->PID, current->chave->ios[current->chave->proxIO].tempoExecRestante);
+        printf("[P%d (Resta: %d)] ", current->chave->PID, current->chave->ios[current->chave->proxIO].tempoExecRestante);
         current = current->prox;
     }
     if (filaFitaIO->inicio == NULL) {
@@ -94,7 +94,7 @@ void printEstadoDaFila(FILA* filaAltaP, FILA* filaBaixaP, FILA* filaDiscoIO, FIL
     printf("| Fila de IO da Impressora:\t");
     current = filaImpressoraIO->inicio;
     while (current != NULL) {
-        printf("[P%d (Tempo de IO: %d)] ", current->chave->PID, current->chave->ios[current->chave->proxIO].tempoExecRestante);
+        printf("[P%d (Resta: %d)] ", current->chave->PID, current->chave->ios[current->chave->proxIO].tempoExecRestante);
         current = current->prox;
     }
     if (filaImpressoraIO->inicio == NULL) {
@@ -105,7 +105,7 @@ void printEstadoDaFila(FILA* filaAltaP, FILA* filaBaixaP, FILA* filaDiscoIO, FIL
     printf("|-------------------------------------------------------------------------------|\n");
     printf("| Process in Execution: ");
     if (processoEmExecucao != NULL) {
-        printf("[P%d (Tempo restante: %d)]", processoEmExecucao->PID, processoEmExecucao->tempoExecRestante);
+        printf("[P%d (Resta: %d)]", processoEmExecucao->PID, processoEmExecucao->tempoExecRestante);
     } else {
         printf("NONE");
     }

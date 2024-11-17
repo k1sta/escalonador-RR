@@ -9,42 +9,52 @@
 // TESTANDO COM O INPUT3.TXT, REPAREI QUE O CÓDIGO ESTÁ ERRADO! Estamos terminando a execução no segundo seguinte. Portanto, todos os processos estão rodando
 // 1 segundo a mais do que deveriam. INVESTIGAR.
 
-#define ARQ_INPUT "input2.txt"
 #define TIME_SLICE 4
 
-int main(void){
+void inicializarEstruturas(FILA** filaAltaP, FILA** filaBaixaP, FILA** filaDiscoIO, FILA** filaFitaIO, FILA** filaImpressoraIO, Processo** listaProcessos, int numProcessos);
+void apagarEstruturas(FILA* filaAltaP, FILA* filaBaixaP, FILA* filaDiscoIO, FILA* filaFitaIO, FILA* filaImpressoraIO, Processo* listaProcessos, int numProcessos);
+
+
+int main(int argc, char *argv[]) {
+    if (argc < 2) {
+        printf("Usage: %s <input_file>\n", argv[0]);
+        return -1;
+    }
+
+	// Coleta o nome do arquivo de input
+    const char *inputFile = argv[1];
+
     // Declarando filas
     FILA* filaAltaP = NULL;
     FILA* filaBaixaP = NULL;
     FILA* filaDiscoIO = NULL;
     FILA* filaFitaIO = NULL;
     FILA* filaImpressoraIO = NULL;
+	
 	// Declarando variáveis relacionadas ao processo
     Processo* listaProcessos = NULL;
     int numProcessos;
 	
-    // Inicializando filas
-    initFila(&filaAltaP);
-	initFila(&filaBaixaP);
-	initFila(&filaDiscoIO);
-	initFila(&filaFitaIO);
-	initFila(&filaImpressoraIO);
-	
-    // Inicializando lista absoluta de processos e pegando o número de procesos
-    numProcessos = contarLinhas(ARQ_INPUT);
-    if (numProcessos < 0) {
-		printf("Erro ao contar linhas do arquivo.\n");
-		return -1;
-	}
-	if (lerProcessos(ARQ_INPUT, &(listaProcessos), numProcessos) < 0) {
-		printf("Erro ao ler processos do arquivo.\n");
-		return -1;
-	}
-
-
 	// Variáveis auxiliares para o While
     int t = 0, processosConcluidos = 0, inicioQuantum = 0;
     Processo* processoEmExecucao = NULL;
+	
+	
+    // Pegando o número de procesos
+    numProcessos = contarLinhas(inputFile);
+	if (numProcessos < 0) {
+		printf("Erro ao contar linhas do arquivo.\n");
+		exit(-1);
+	}
+    
+	// Inicializando estruturas
+    inicializarEstruturas(&filaAltaP, &filaBaixaP, &filaDiscoIO, &filaFitaIO, &filaImpressoraIO, &listaProcessos, numProcessos);
+	
+	// Lendo os processos
+	if (lerProcessos(inputFile, &(listaProcessos), numProcessos) != 0) {
+		printf("Erro ao ler processos do arquivo.\n");
+		exit(-4);
+	}
 
 	// Escalonador rodando
     while(processosConcluidos < numProcessos){
@@ -168,15 +178,32 @@ int main(void){
     
 	
 	// Removendo filas e listas
+    apagarEstruturas(filaAltaP, filaBaixaP, filaDiscoIO, filaFitaIO, filaImpressoraIO, listaProcessos, numProcessos);
+	return 0;
+}
+
+void inicializarEstruturas(FILA** filaAltaP, FILA** filaBaixaP, FILA** filaDiscoIO, FILA** filaFitaIO, FILA** filaImpressoraIO, Processo** listaProcessos, int numProcessos){
+    if(initFila(filaAltaP) || initFila(filaBaixaP) || initFila(filaDiscoIO) || initFila(filaFitaIO) || initFila(filaImpressoraIO)){
+        printf("Erro ao inicializar filas.\n");
+        exit(-2);
+    }
+    
+    *listaProcessos = (Processo*)malloc(numProcessos * sizeof(Processo));
+    if (!*listaProcessos) {
+        perror("Erro ao alocar memória para os processos.\n");
+        exit(-3);
+    }
+}
+
+
+void apagarEstruturas(FILA* filaAltaP, FILA* filaBaixaP, FILA* filaDiscoIO, FILA* filaFitaIO, FILA* filaImpressoraIO, Processo* listaProcessos, int numProcessos) {
     deletarFila(filaAltaP); 
-	deletarFila(filaBaixaP);
-	deletarFila(filaDiscoIO);
-	deletarFila(filaFitaIO);
-	deletarFila(filaImpressoraIO);
+    deletarFila(filaBaixaP);
+    deletarFila(filaDiscoIO);
+    deletarFila(filaFitaIO);
+    deletarFila(filaImpressoraIO);
     for (int i = 0; i < numProcessos; i++) {
         free(listaProcessos[i].ios);
     }
     free(listaProcessos);
 }
-
-
