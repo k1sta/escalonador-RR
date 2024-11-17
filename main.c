@@ -153,7 +153,7 @@ int main(int argc, char *argv[]) {
             }	
 
 			// 6. verificar se esse processo sofre preempção no instante t (se sim, entra em Baixa Prioridade)
-			if (processoEmExecucao != NULL && t - inicioQuantum >= TIME_SLICE){
+			if (processoEmExecucao != NULL && t - inicioQuantum + 1 >= TIME_SLICE){
 				printf("Processo %d sofreu preempcao (quantum iniciado em %d)\n", processoEmExecucao->PID, inicioQuantum);
 				inserirFila(filaBaixaP, processoEmExecucao);
 				processoEmExecucao = NULL;
