@@ -47,7 +47,6 @@ Onde <input_file> é o caminho para um dos arquivos de entrada (`input.txt`, `in
 - `IO`: Estrutura que representa uma operação de I/O, contendo informações sobre o tipo de dispositivo e o tempo de início da operação.
 
 ## Autores
-Este projeto foi desenvolvido pelos alunos da disciplina de Arquitetura de Computadores e Sistemas Operacionais da UFRJ.
-
+Este projeto foi desenvolvido pelos alunos [k1sta](https://github.com/k1sta) e [brunovschulz](https://github.com/brunovschulz) durante a disciplina de Arquitetura de Computadores e Sistemas Operacionais da UFRJ
 ## Licença
 Este projeto é de uso acadêmico e não possui uma licença específica.
