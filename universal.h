@@ -9,43 +9,52 @@
 typedef struct {
     char tipo; // Fita magnética (F) | Disco (D) | Impressora (I)
     int inicio;
-    int tempoExec;
+    int tempoExecRestante;
 } IO;
 
 typedef struct {
     int PID;
     int tempoEntrada;
     int tempoExec;
+    int tempoExecRestante;
     int qntdIO;
+    int proxIO;
     IO* ios;
 } Processo;
 
 // Estruturas para 
-typedef struct{
-    int chave;
+typedef struct Elemento {
+    Processo* chave;
     struct Elemento* prox;
 } Elemento;
 
-typedef struct{
+typedef struct FILA{
     Elemento* inicio;
     Elemento* fim;
 } FILA;
 
 // funções para as filas
 
-void initFila(FILA* f);
+void initFila(FILA** f);
 
-bool inserirFila(FILA* f, int chaveNova);
+bool inserirFila(FILA* f, Processo* chaveNova);
 
-void removerFila(FILA *f);
+Processo* removerFila(FILA *f);
 
 void deletarFila(FILA *f);
 
 // funções para a leitura 
 
-
 int contarLinhas(const char* arqNome);
 
 int lerProcessos(const char* arqNome, Processo** processos, int numProcessos);
+
+// funções para a impressão
+
+void imprimirTabelaProcessos(Processo* processos, int numProcessos);
+
+void imprimirTabelaIO(Processo* processos, int numProcessos);
+
+void printEstadoDaFila(FILA* filaAltaP, FILA* filaBaixaP, FILA* filaDiscoIO, FILA* filaFitaIO, FILA* filaImpressoraIO, Processo* processoEmExecucao);
 
 #endif

@@ -1,0 +1,4 @@
+PID, Tempo_Entrada, Tempo_Execucao, Qntd_IOs, Tipo_IO, Inicio
+1 1 8 2 F 3 I 5
+2 3 5 1 D 2 
+3 6 4 2 D 1 I 3

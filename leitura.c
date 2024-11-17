@@ -36,7 +36,7 @@ int lerProcessos(const char* arqNome, Processo** processos, int numProcessos){
     // cria vetor de processos
     *processos = (Processo*)malloc(numProcessos * sizeof(Processo));
     if (!processos) {
-            perror("Erro ao alocar memória para oS processoS.\n");
+            perror("Erro ao alocar memória para os processos.\n");
             fclose(arq);
             return -3;
         }
@@ -51,6 +51,10 @@ int lerProcessos(const char* arqNome, Processo** processos, int numProcessos){
         //printf("Entrando no processo %d\n", i+1); // DEBUG
         int numIO;
         sscanf(linha, "%d %d %d %d", &((*processos)[i].PID), &((*processos)[i].tempoEntrada), &((*processos)[i].tempoExec), &numIO);
+        (*processos)[i].tempoExecRestante = (*processos)[i].tempoExec;
+        (*processos)[i].proxIO = 0;
+
+
 
         // Aloca os IO's
         (*processos)[i].ios = (IO*)malloc(numIO * sizeof(IO));
@@ -61,13 +65,26 @@ int lerProcessos(const char* arqNome, Processo** processos, int numProcessos){
                 linha_io = strchr(linha_io, ' ') + 1;
             }
             for (int j = 0; j < numIO; j++) {
-                sscanf(linha_io, "%c %d %d", &((*processos)[i].ios[j].tipo), &((*processos)[i].ios[j].inicio), &((*processos)[i].ios[j].tempoExec));
+                sscanf(linha_io, "%c %d", &((*processos)[i].ios[j].tipo), &((*processos)[i].ios[j].inicio));
                 //printf("%c %d %d\n", (*processos)[i].ios[j].tipo, (*processos)[i].ios[j].inicio, (*processos)[i].ios[j].tempoExec); // DEBUG
-                for (int k = 0; k < 3; k++)
+                switch((*processos)[i].ios[j].tipo){
+                    case 'F':
+                        (*processos)[i].ios[j].tempoExecRestante = 5;
+                        break;
+                    case 'I':
+                        (*processos)[i].ios[j].tempoExecRestante = 3;
+                        break;
+                    case 'D':
+                        (*processos)[i].ios[j].tempoExecRestante = 8;
+                        break;
+                }
+            }
+
+		for (int k = 0; k < 3; k++)
                     linha_io = strchr(linha_io, ' ') + 1;
 
-            }
         }
+        
 
         (*processos)[i].qntdIO = numIO;
 

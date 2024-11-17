@@ -1,16 +1,22 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
 #include "universal.h"
 
 
-void initFila(FILA* f)
+void initFila(FILA** f)
 {
+    if (!*f) {
+        *f = (FILA*) malloc (sizeof(FILA));
+        if (!*f) printf("Erro na alocação da fila");
+    }
+    
     // inicia os vetores da fila como nulo
-    f->inicio = NULL;
-    f->fim = NULL;
+    (*f)->inicio = NULL;
+    (*f)->fim = NULL;
 }
 
-bool inserirFila(FILA* f, int chaveNova)
+bool inserirFila(FILA* f, Processo* chaveNova)
 {
     Elemento* novo = (Elemento*)malloc(sizeof(Elemento));
     
@@ -35,8 +41,11 @@ bool inserirFila(FILA* f, int chaveNova)
     return true;
 }
 
-int removerFila(FILA *f)
+Processo* removerFila(FILA *f)
 {
+    if (f->inicio == NULL){
+        return NULL;
+    }
     Elemento* aux = f->inicio;
     if (!aux->prox){
         f->inicio = NULL;
@@ -44,7 +53,7 @@ int removerFila(FILA *f)
         f->inicio = aux->prox;
     }
 
-    int pid = aux->chave;
+    Processo* pid = aux->chave;
     free(aux);
     return pid;
 }
