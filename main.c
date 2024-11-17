@@ -68,12 +68,6 @@ int main(int argc, char *argv[]) {
 			// if (t < listaProcessos[i].tempoEntrada) break;
 	    }
 
-		if (processoEmExecucao != NULL && t - inicioQuantum >= TIME_SLICE){
-			printf("Processo %d sofreu preempcao (quantum iniciado em %d)\n", processoEmExecucao->PID, inicioQuantum);
-			inserirFila(filaBaixaP, processoEmExecucao);
-			processoEmExecucao = NULL;
-		}
-
 	    // 2. verificar se retornam processos das filas de IO (Prioridade relativa ao tipo de IO)
 	    if (filaDiscoIO->inicio != NULL){
 		    if(filaDiscoIO->inicio->chave->ios[filaDiscoIO->inicio->chave->proxIO].tempoExecRestante == 0) {
@@ -158,18 +152,14 @@ int main(int argc, char *argv[]) {
 			}
             }	
 
-			/*
 			// 6. verificar se esse processo sofre preempção no instante t (se sim, entra em Baixa Prioridade)
 			if (processoEmExecucao != NULL && t - inicioQuantum >= TIME_SLICE){
 				printf("Processo %d sofreu preempcao (quantum iniciado em %d)\n", processoEmExecucao->PID, inicioQuantum);
 				inserirFila(filaBaixaP, processoEmExecucao);
 				processoEmExecucao = NULL;
 			}
-			*/
 		}
-
-
-		// 7. imprimir estado das filas
+		
 		printEstadoDaFila(filaAltaP, filaBaixaP, filaDiscoIO, filaFitaIO, filaImpressoraIO, processoEmExecucao);
 
 	    t++;
