@@ -89,7 +89,6 @@ int lerProcessos(const char* arqNome, Processo** processos, int numProcessos){
                     linha_io = strchr(linha_io, ' ') + 1;
             }
 
-
         }
         
 
