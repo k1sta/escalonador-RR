@@ -30,9 +30,9 @@ gcc -o escalonador main.c fila.c leitura.c impressao.c
 Para executar o simulador, utilize o comando:
 
 ```sh
-./escalonador <input_file>
+./escalonador <input_file> [-s]
 ```
-Onde <input_file> é o caminho para um dos arquivos de entrada (`input.txt`, `input2.txt`, `input3.txt`).
+Onde <input_file> é o caminho para um dos arquivos de entrada (`input.txt`, `input2.txt`, `input3.txt`) e `-s` é um argumento opcional para a impressão acontecer passo a passo do tempo do escalonador.
 
 ## Funcionalidades
 - Leitura dos processos a partir de um arquivo de entrada.

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <stdbool.h>
 #include <time.h>
 #include "universal.h"
@@ -16,10 +17,14 @@ void apagarEstruturas(FILA* filaAltaP, FILA* filaBaixaP, FILA* filaDiscoIO, FILA
 
 
 int main(int argc, char *argv[]) {
-    if (argc < 2) {
-        printf("Usage: %s <input_file>\n", argv[0]);
+    if (argc != 2 && argc != 3) {
+        printf("Uso: %s <input_file> [-s]\n", argv[0]);
         return -1;
     }
+	if (argc == 3 && strcmp(argv[2], "-s") != 0) {
+		printf("Uso: %s <input_file> [-s]\n", argv[0]);
+		return -1;
+	}
 
 	// Coleta o nome do arquivo de input
     const char *inputFile = argv[1];
@@ -50,12 +55,22 @@ int main(int argc, char *argv[]) {
 	// Inicializando estruturas
     inicializarEstruturas(&filaAltaP, &filaBaixaP, &filaDiscoIO, &filaFitaIO, &filaImpressoraIO, &listaProcessos, numProcessos);
 	
+	// Limpando a tela
+	printf("\e[1;1H\e[2J");
+	
 	// Lendo os processos
 	if (lerProcessos(inputFile, &(listaProcessos), numProcessos) != 0) {
 		printf("Erro ao ler processos do arquivo.\n");
 		exit(-4);
 	}
 
+	imprimirTabelaProcessos(listaProcessos, numProcessos);
+	imprimirTabelaIO(listaProcessos, numProcessos);
+	if (argc == 3 && strcmp(argv[2], "-s") == 0) {
+		printf("Pressione ENTER para continuar...\n");
+		getchar();
+	}
+	puts("\n\n");
 	// Escalonador rodando
     while(processosConcluidos < numProcessos){
 		printf("Segundo %d-%d:\n", t, t+1);
@@ -63,7 +78,7 @@ int main(int argc, char *argv[]) {
 	    for (int i = 0; i < numProcessos; i++){
 		    if (listaProcessos[i].tempoEntrada == t){
 			    inserirFila(filaAltaP, &listaProcessos[i]);
-				printf("Processo %d entrou na lista de Alta Prioridade\n", i+1);
+				printf("Processo %d entrou na lista de Alta Prioridade\n", listaProcessos[i].PID);
 		    }
 			// if (t < listaProcessos[i].tempoEntrada) break;
 	    }
@@ -99,7 +114,14 @@ int main(int argc, char *argv[]) {
 				filaFitaIO->inicio->chave->ios[filaFitaIO->inicio->chave->proxIO].tempoExecRestante--;
 	    } 
 
-	    // 3. verificar se há processo em execução
+		// 3. verificar se esse processo sofre preempção no instante t (se sim, entra em Baixa Prioridade)
+		if (processoEmExecucao != NULL && t - inicioQuantum >= TIME_SLICE){
+			printf("Processo %d sofreu preempcao (quantum iniciado em %d)\n", processoEmExecucao->PID, inicioQuantum);
+			inserirFila(filaBaixaP, processoEmExecucao);
+			processoEmExecucao = NULL;
+		}
+	    
+		// 4. verificar se há processo em execução
 	    if (processoEmExecucao == NULL){
 			processoEmExecucao = removerFila(filaAltaP);
 			if (processoEmExecucao != NULL) printf("Processo %d em execucao, vindo da fila alta.\n", processoEmExecucao->PID);
@@ -117,9 +139,11 @@ int main(int argc, char *argv[]) {
             
     		processoEmExecucao->tempoExecRestante--;
 
-            // 4. verificar se esse processo acabou a execução
+            // 5. verificar se esse processo acabou a execução
 		    if (processoEmExecucao->tempoExecRestante == 0){
+				printf("Processo %d possui %d segundos restantes de execucao.\n", processoEmExecucao->PID, processoEmExecucao->tempoExecRestante);
 				printf("Processo %d terminou sua execucao.\n", processoEmExecucao->PID);
+				processoEmExecucao->turnaround = t - processoEmExecucao->tempoEntrada;
 				processosConcluidos++;
 				processoEmExecucao = NULL;
 		    } else{
@@ -127,7 +151,7 @@ int main(int argc, char *argv[]) {
 		    }	
 	
 
-	    	// 5. verificar se esse processo sofre IO no instante n da execução do processo
+	    	// 6. verificar se esse processo sofre IO no instante n da execução do processo
 			if(processoEmExecucao != NULL){
 				if(processoEmExecucao->qntdIO > processoEmExecucao->proxIO){
 					printf("Processo %d possui %d io's restantes (momento %d do processo)\n", processoEmExecucao->PID, processoEmExecucao->qntdIO - processoEmExecucao->proxIO, processoEmExecucao->tempoExec - processoEmExecucao->tempoExecRestante);
@@ -152,22 +176,21 @@ int main(int argc, char *argv[]) {
 			}
             }	
 
-			// 6. verificar se esse processo sofre preempção no instante t (se sim, entra em Baixa Prioridade)
-			if (processoEmExecucao != NULL && t - inicioQuantum + 1 >= TIME_SLICE){
-				printf("Processo %d sofreu preempcao (quantum iniciado em %d)\n", processoEmExecucao->PID, inicioQuantum);
-				inserirFila(filaBaixaP, processoEmExecucao);
-				processoEmExecucao = NULL;
-			}
 		}
 		
 		printEstadoDaFila(filaAltaP, filaBaixaP, filaDiscoIO, filaFitaIO, filaImpressoraIO, processoEmExecucao);
 
 	    t++;
 		printf("%s", "--------------------------------------------------------------------------------\n");
+		if (argc == 3 && strcmp(argv[2], "-s") == 0) getchar();
     }
 
     
-	
+	printf("Todos os processos foram concluidos.\nTempo de execução total: %d segundos\nTurnaround para cada processo:\n", t);
+	for(int i = 0; i < numProcessos; i++){
+		printf("\tProcesso %d: %d segundos\n", listaProcessos[i].PID, listaProcessos[i].turnaround);
+	}
+
 	// Removendo filas e listas
     apagarEstruturas(filaAltaP, filaBaixaP, filaDiscoIO, filaFitaIO, filaImpressoraIO, listaProcessos, numProcessos);
 	return 0;

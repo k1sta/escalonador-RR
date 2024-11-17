@@ -2,7 +2,7 @@
 #include "universal.h"
 
 void imprimirTabelaProcessos(Processo* processos, int numProcessos) {
-    printf("\n\n\n");
+    printf("\n\n");
     printf(" _______________________________________________________________________________\n");
     printf("|PID\t|Tempo de Entrada\t|Tempo de Execucao\t|Quantidade de IOs\t|\n");
     printf("--------------------------------------------------------------------------------|\n");
@@ -10,18 +10,17 @@ void imprimirTabelaProcessos(Processo* processos, int numProcessos) {
         printf("|%d\t|%d\t\t\t|%d\t\t\t|%d\t\t\t|\n", processos[i].PID, processos[i].tempoEntrada, processos[i].tempoExec, processos[i].qntdIO);
     }
     printf(" -------------------------------------------------------------------------------\n");
-    printf("\n\n\n");
 }
 
 void imprimirTabelaIO(Processo* processos, int numProcessos) {
-    printf("\n\n\n");
-    printf("______________________________________________________________________\n");
+    printf("\n\n");
+    printf("________________________________________________________________\n");
     printf("|PID\t|Qntd de IO\t|Tipo de IO\t|Início\t|Tempo Rest\t|\n");
-    printf("|---------------------------------------------------------------------|\n");
+    printf("|---------------------------------------------------------------|\n");
     for (int i = 0; i < numProcessos; i++) {
         printf("|%d\t|%d\t\t", processos[i].PID, processos[i].qntdIO);
     	if(processos[i].qntdIO == 0){
-		printf("%s", "|\t\t|\t|\t\t||\t\t|\n");
+		printf("%s", "|\t\t|\t|\t\t|\n");
 		continue;
 	}
 	for (int j = 0; j < processos[i].qntdIO; j++){
@@ -32,8 +31,8 @@ void imprimirTabelaIO(Processo* processos, int numProcessos) {
 	}
     }
 
-    printf("|---------------------------------------------------------------------|\n");
-    printf("\n\n\n");
+    printf(" --------------------------------------------------------------- \n");
+    printf("\n\n");
 }
 
 void printEstadoDaFila(FILA* filaAltaP, FILA* filaBaixaP, FILA* filaDiscoIO, FILA* filaFitaIO, FILA* filaImpressoraIO, Processo* processoEmExecucao) {
@@ -42,7 +41,7 @@ void printEstadoDaFila(FILA* filaAltaP, FILA* filaBaixaP, FILA* filaDiscoIO, FIL
     printf("|                              Estado das Filas                                 |\n");
     printf("|-------------------------------------------------------------------------------|\n");
     
-    // Print High Priority Queue
+    // Impressão fila de Alta Prioridade
     printf("| Fila de Alta Prioridade:\t");
     Elemento* current = filaAltaP->inicio;
     while (current != NULL) {
@@ -54,7 +53,7 @@ void printEstadoDaFila(FILA* filaAltaP, FILA* filaBaixaP, FILA* filaDiscoIO, FIL
     }
     printf("\n");
 
-    // Print Low Priority Queue
+    // Impressão fila de Baixa Prioridade
     printf("| Fila de Baixa Prioridade:\t");
     current = filaBaixaP->inicio;
     while (current != NULL) {
@@ -66,7 +65,7 @@ void printEstadoDaFila(FILA* filaAltaP, FILA* filaBaixaP, FILA* filaDiscoIO, FIL
     }
     printf("\n");
 
-    // Print Disk IO Queue
+    // Impressão fila de IO do disco
     printf("| Fila de IO do Disco:\t\t");
     current = filaDiscoIO->inicio;
     while (current != NULL) {
@@ -78,7 +77,7 @@ void printEstadoDaFila(FILA* filaAltaP, FILA* filaBaixaP, FILA* filaDiscoIO, FIL
     }
     printf("\n");
 
-    // Print Tape IO Queue
+    // Impressão fila de IO da fita
     printf("| Fila de IO da Fita:\t\t");
     current = filaFitaIO->inicio;
     while (current != NULL) {
@@ -90,7 +89,7 @@ void printEstadoDaFila(FILA* filaAltaP, FILA* filaBaixaP, FILA* filaDiscoIO, FIL
     }
     printf("\n");
 
-    // Print Printer IO Queue
+    // Impressão fila de IO da impressora
     printf("| Fila de IO da Impressora:\t");
     current = filaImpressoraIO->inicio;
     while (current != NULL) {
@@ -101,9 +100,9 @@ void printEstadoDaFila(FILA* filaAltaP, FILA* filaBaixaP, FILA* filaDiscoIO, FIL
         printf("VAZIA");
     }
     printf("\n");
-    // Print Process in Execution
+    // Imprime processo em execução
     printf("|-------------------------------------------------------------------------------|\n");
-    printf("| Process in Execution: ");
+    printf("| Processo em execução: ");
     if (processoEmExecucao != NULL) {
         printf("[P%d (Resta: %d)]", processoEmExecucao->PID, processoEmExecucao->tempoExecRestante);
     } else {
