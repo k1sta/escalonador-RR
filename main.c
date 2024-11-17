@@ -10,7 +10,7 @@
 // TESTANDO COM O INPUT3.TXT, REPAREI QUE O CÓDIGO ESTÁ ERRADO! Estamos terminando a execução no segundo seguinte. Portanto, todos os processos estão rodando
 // 1 segundo a mais do que deveriam. INVESTIGAR.
 
-#define TIME_SLICE 4
+#define TIME_SLICE 5
 
 void inicializarEstruturas(FILA** filaAltaP, FILA** filaBaixaP, FILA** filaDiscoIO, FILA** filaFitaIO, FILA** filaImpressoraIO, Processo** listaProcessos, int numProcessos);
 void apagarEstruturas(FILA* filaAltaP, FILA* filaBaixaP, FILA* filaDiscoIO, FILA* filaFitaIO, FILA* filaImpressoraIO, Processo* listaProcessos, int numProcessos);
@@ -143,7 +143,7 @@ int main(int argc, char *argv[]) {
 		    if (processoEmExecucao->tempoExecRestante == 0){
 				printf("Processo %d possui %d segundos restantes de execucao.\n", processoEmExecucao->PID, processoEmExecucao->tempoExecRestante);
 				printf("Processo %d terminou sua execucao.\n", processoEmExecucao->PID);
-				processoEmExecucao->turnaround = t - processoEmExecucao->tempoEntrada;
+				processoEmExecucao->turnaround = (t+1) - processoEmExecucao->tempoEntrada;
 				processosConcluidos++;
 				processoEmExecucao = NULL;
 		    } else{
