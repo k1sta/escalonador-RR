@@ -17,6 +17,7 @@ typedef struct {
     int tempoEntrada;
     int tempoExec;
     int tempoExecRestante;
+    int turnaround;
     int qntdIO;
     int proxIO;
     IO* ios;

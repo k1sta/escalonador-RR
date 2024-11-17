@@ -13,7 +13,7 @@ int contarLinhas(const char* arqNome) {
         return -2;
     }  
     
-    int qntLinhas = 0;
+    int qntLinhas = -2;
     char ch;
     while ((ch = fgetc(arq)) != EOF) {
         if (ch == '\n') {
@@ -33,8 +33,20 @@ int lerProcessos(const char* arqNome, Processo** processos, int numProcessos){
         return -2;
     }  
 
-    // cria o vetor de char para as linhas e despreza o cabeçalho
+    // cria o vetor de char para as linhas
     char linha[TAM_MAX_LINHA];
+
+    // cria as variáveis para o tempo de IO de cada tipo
+    int tempoIOFita, tempoIODisco, tempoIOImpressora;
+
+
+    // pula o cabeçalho do tempo de IO e coleta os tempos de IO
+    fgets(linha, sizeof(linha), arq);
+    fgets(linha, sizeof(linha), arq);
+    sscanf(linha, "%d %d %d", &tempoIOFita, &tempoIODisco, &tempoIOImpressora);
+    printf("Tempo de IO para a fita: %d | Tempo de IO para o disco: %d | Tempo de IO para a impressora: %d\n", tempoIOFita, tempoIODisco, tempoIOImpressora);
+    
+    // pula o cabeçalho dos processos
     fgets(linha, sizeof(linha), arq);
 
     int i = 0;
@@ -45,12 +57,14 @@ int lerProcessos(const char* arqNome, Processo** processos, int numProcessos){
         sscanf(linha, "%d %d %d %d", &((*processos)[i].PID), &((*processos)[i].tempoEntrada), &((*processos)[i].tempoExec), &numIO);
         (*processos)[i].tempoExecRestante = (*processos)[i].tempoExec;
         (*processos)[i].proxIO = 0;
+        (*processos)[i].turnaround = -1;
 
 
 
         // Aloca os IO's
         (*processos)[i].ios = (IO*)malloc(numIO * sizeof(IO));
 
+        
         if (numIO){
             char* linha_io = linha;
             for (int j = 0; j < 4; j++){
@@ -58,22 +72,22 @@ int lerProcessos(const char* arqNome, Processo** processos, int numProcessos){
             }
             for (int j = 0; j < numIO; j++) {
                 sscanf(linha_io, "%c %d", &((*processos)[i].ios[j].tipo), &((*processos)[i].ios[j].inicio));
-                //printf("%c %d %d\n", (*processos)[i].ios[j].tipo, (*processos)[i].ios[j].inicio, (*processos)[i].ios[j].tempoExec); // DEBUG
                 switch((*processos)[i].ios[j].tipo){
                     case 'F':
-                        (*processos)[i].ios[j].tempoExecRestante = 5;
+                        (*processos)[i].ios[j].tempoExecRestante = tempoIOFita;
                         break;
                     case 'I':
-                        (*processos)[i].ios[j].tempoExecRestante = 3;
+                        (*processos)[i].ios[j].tempoExecRestante = tempoIOImpressora;
                         break;
                     case 'D':
-                        (*processos)[i].ios[j].tempoExecRestante = 8;
+                        (*processos)[i].ios[j].tempoExecRestante = tempoIODisco;
                         break;
                 }
-            }
-
-            	for (int k = 0; k < 2; k++)
+                //printf("%c %d %d\n", (*processos)[i].ios[j].tipo, (*processos)[i].ios[j].inicio, (*processos)[i].ios[j].tempoExecRestante); // DEBUG
+		        
+                for (int k = 0; k < 2; k++) 
                     linha_io = strchr(linha_io, ' ') + 1;
+            }
 
         }
         
