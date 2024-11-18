@@ -17,7 +17,7 @@ void imprimirTabelaProcessos(Processo* processos, int numProcessos) {
 void imprimirTabelaIO(Processo* processos, int numProcessos) {
     printf("\n\n");
     printf("________________________________________________________________\n");
-    printf("|PID\t|Qntd de IO\t|Tipo de IO\t|Início\t|Tempo Rest\t|\n");
+    printf("|PID\t|Qntd de IO\t|Tipo de IO\t|Inicio\t|Tempo Rest\t|\n");
     printf("|---------------------------------------------------------------|\n");
     for (int i = 0; i < numProcessos; i++) {
         printf("|%d\t|%d\t\t", processos[i].PID, processos[i].qntdIO);

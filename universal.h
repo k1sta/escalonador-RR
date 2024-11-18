@@ -44,6 +44,8 @@ Processo* removerFila(FILA *f);
 
 void deletarFila(FILA *f);
 
+void decrementarTemposFila(FILA *f);
+
 // funções para a leitura 
 
 int contarLinhas(const char* arqNome);
