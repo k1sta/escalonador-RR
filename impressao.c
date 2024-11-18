@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "universal.h"
 
+//Impressão da tabela de Processos no início da execução do programa
 void imprimirTabelaProcessos(Processo* processos, int numProcessos) {
     printf("\n\n");
     printf(" _______________________________________________________________________________\n");
@@ -12,6 +13,7 @@ void imprimirTabelaProcessos(Processo* processos, int numProcessos) {
     printf(" -------------------------------------------------------------------------------\n");
 }
 
+//Impressão da tabela de IOS de cada processo no início da execução do programa
 void imprimirTabelaIO(Processo* processos, int numProcessos) {
     printf("\n\n");
     printf("________________________________________________________________\n");
@@ -35,6 +37,7 @@ void imprimirTabelaIO(Processo* processos, int numProcessos) {
     printf("\n\n");
 }
 
+//Impressão das filas e seus processos a cada segundo de execução do escalonador
 void printEstadoDaFila(FILA* filaAltaP, FILA* filaBaixaP, FILA* filaDiscoIO, FILA* filaFitaIO, FILA* filaImpressoraIO, Processo* processoEmExecucao) {
     printf("\n\n");
     printf(" _______________________________________________________________________________\n");
@@ -102,7 +105,7 @@ void printEstadoDaFila(FILA* filaAltaP, FILA* filaBaixaP, FILA* filaDiscoIO, FIL
     printf("\n");
     // Imprime processo em execução
     printf("|-------------------------------------------------------------------------------|\n");
-    printf("| Processo em execução: ");
+    printf("| Processo em execucao: ");
     if (processoEmExecucao != NULL) {
         printf("[P%d (Resta: %d)]", processoEmExecucao->PID, processoEmExecucao->tempoExecRestante);
     } else {

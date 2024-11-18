@@ -14,7 +14,6 @@ int main(void){
     imprimirTabelaProcessos(listaProcessos, numProcessos);
     imprimirTabelaIO(listaProcessos, numProcessos);
 
-    // Free allocated memory
     for (int i = 0; i < numProcessos; i++) {
         free(listaProcessos[i].ios);
     }

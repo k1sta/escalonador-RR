@@ -4,14 +4,14 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-// structs
-
+// Estrutura para I/O
 typedef struct {
     char tipo; // Fita magnética (F) | Disco (D) | Impressora (I)
     int inicio;
     int tempoExecRestante;
 } IO;
 
+// Estrutura para Processo
 typedef struct {
     int PID;
     int tempoEntrada;
@@ -19,11 +19,11 @@ typedef struct {
     int tempoExecRestante;
     int turnaround;
     int qntdIO;
-    int proxIO;
-    IO* ios;
+    int proxIO; //indice do próximo IO a ser executado
+    IO* ios; //vetor de IOs
 } Processo;
 
-// Estruturas para 
+// Estruturas para fila
 typedef struct Elemento {
     Processo* chave;
     struct Elemento* prox;

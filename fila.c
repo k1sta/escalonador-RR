@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include "universal.h"
 
-
+// Inicializar fila
 int initFila(FILA** f)
 {
     if (!*f) {
@@ -20,6 +20,7 @@ int initFila(FILA** f)
     return 0;
 }
 
+// Inserir elemento na fila
 bool inserirFila(FILA* f, Processo* chaveNova)
 {
     Elemento* novo = (Elemento*)malloc(sizeof(Elemento));
@@ -45,12 +46,16 @@ bool inserirFila(FILA* f, Processo* chaveNova)
     return true;
 }
 
+// Remover elemento da fila
 Processo* removerFila(FILA *f)
 {
+    //se a fila estiver vazia, acaba função
     if (f->inicio == NULL){
         return NULL;
     }
+
     Elemento* aux = f->inicio;
+    
     if (!aux->prox){
         f->inicio = NULL;
     } else{
@@ -62,6 +67,7 @@ Processo* removerFila(FILA *f)
     return pid;
 }
 
+//deletar fila e liberar espaço de memória
 void deletarFila(FILA *f)
 {
     Elemento* aux = f->inicio;
