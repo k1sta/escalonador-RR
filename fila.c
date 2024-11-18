@@ -78,3 +78,12 @@ void deletarFila(FILA *f)
     }
     free(f);
 }
+
+void decrementarTemposFila(FILA *f)
+{
+    Elemento* aux = f->inicio;
+    while(aux != NULL){
+        aux->chave->ios[aux->chave->proxIO].tempoExecRestante--;
+        aux = aux->prox;
+    }
+}

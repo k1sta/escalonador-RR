@@ -16,7 +16,7 @@ O projeto é composto pelos seguintes arquivos:
 - [`impressao.c`](impressao.c): Contém as funções para impressão do estado das filas e dos processos.
 - [`teste_impresso.c`](teste_impresso.c): Arquivo de teste para verificar a impressão dos processos e suas operações de I/O.
 - [`universal.h`](universal.h): Cabeçalho com as definições das estruturas e funções utilizadas no projeto.
-- [`input.txt`](input.txt), [`input2.txt`](input2.txt), [`input3.txt`](input3.txt): Arquivos de entrada com os dados dos processos a serem simulados.
+- [`input1.txt`](input1.txt), [`input2.txt`](input2.txt), [`input3.txt`](input3.txt), [`input4r.txt`](input4r.txt): Arquivos de entrada com os dados dos processos a serem simulados.
 - [`README.md`](README.md): Este arquivo de descrição do projeto.
 
 ## Compilação e Execução
@@ -30,9 +30,12 @@ gcc -o escalonador main.c fila.c leitura.c impressao.c
 Para executar o simulador, utilize o comando:
 
 ```sh
-./escalonador <input_file> [-s]
+./escalonador <input_file> <quantum_size> [-s]
 ```
-Onde <input_file> é o caminho para um dos arquivos de entrada (`input.txt`, `input2.txt`, `input3.txt`) e `-s` é um argumento opcional para a impressão acontecer passo a passo do tempo do escalonador.
+Onde:
+- `<input_file>`: Caminho para um dos arquivos de entrada (`input1.txt`, `input2.txt`, `input3.txt`, `input4r.txt`)
+- `<quantum_size>`: Tamanho do quantum para o escalonador
+- `-s`: Argumento opcional para a impressão acontecer passo a passo do tempo do escalonador.
 
 ## Funcionalidades
 - Leitura dos processos a partir de um arquivo de entrada.
@@ -48,5 +51,6 @@ Onde <input_file> é o caminho para um dos arquivos de entrada (`input.txt`, `in
 
 ## Autores
 Este projeto foi desenvolvido pelos alunos [k1sta](https://github.com/k1sta) e [brunovschulz](https://github.com/brunovschulz) durante a disciplina de Arquitetura de Computadores e Sistemas Operacionais da UFRJ
+
 ## Licença
 Este projeto é de uso acadêmico e não possui uma licença específica.

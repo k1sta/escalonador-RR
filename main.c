@@ -5,8 +5,6 @@
 #include <time.h>
 #include "universal.h"
 
-#define TIME_SLICE 5
-
 // Assinatura das funções para inicializar e remover estruturas de dados
 
 void inicializarEstruturas(FILA** filaAltaP, FILA** filaBaixaP, FILA** filaDiscoIO, FILA** filaFitaIO, FILA** filaImpressoraIO, Processo** listaProcessos, int numProcessos);
@@ -16,14 +14,26 @@ void apagarEstruturas(FILA* filaAltaP, FILA* filaBaixaP, FILA* filaDiscoIO, FILA
 int main(int argc, char *argv[]) {
 
 	// Se o programa for inicializado errado, gera erro
-    if (argc != 2 && argc != 3) {
-        printf("Uso: %s <input_file> [-s]\n", argv[0]);
+    if (argc != 3 && argc != 4) {
+        printf("Uso: %s <input_file> <tam_quantum> [-s]\n", argv[0]);
         return -1;
     }
-	if (argc == 3 && strcmp(argv[2], "-s") != 0) {
-		printf("Uso: %s <input_file> [-s]\n", argv[0]);
-		return -1;
+
+	// Verifica se o segundo argumento é um inteiro
+	long tam_quantum;
+	if(argc == 3 || argc == 4){
+		char *endptr;
+		tam_quantum = strtol(argv[2], &endptr, 10);
+		if (*endptr != '\0' || tam_quantum <= 0) {
+			printf("Erro: <tam_quantum> deve ser um número inteiro positivo.\n");
+			return -1;
+		}
 	}
+
+    if (argc == 4 && strcmp(argv[3], "-s") != 0) {
+        printf("Uso: %s <input_file> <tam_quantum> [-s]\n", argv[0]);
+        return -1;
+    }
 
 	// Coleta o nome do arquivo de input
     const char *inputFile = argv[1];
@@ -90,49 +100,55 @@ int main(int argc, char *argv[]) {
 	    if (filaDiscoIO->inicio != NULL){
 
 			//se o tempo de execução do I/O for 0, retornamos o processo para a fila de baixa prioridade
-		    if(filaDiscoIO->inicio->chave->ios[filaDiscoIO->inicio->chave->proxIO].tempoExecRestante == 0) {
+		    while(filaDiscoIO->inicio->chave->ios[filaDiscoIO->inicio->chave->proxIO].tempoExecRestante == 0) {
 			    filaDiscoIO->inicio->chave->proxIO++;
 			    inserirFila(filaBaixaP, removerFila(filaDiscoIO));
 				printf("Processo %d saiu do IO tipo DISCO, entrou na fila de Baixa Prioridade\n", filaBaixaP->fim->chave->PID);
+
+				if(filaDiscoIO->inicio == NULL) break;
 		    }
 
 			//se o I/O não tiver acabado, decrementamos 1 de seu tempo
 		    if(filaDiscoIO->inicio != NULL)
-				filaDiscoIO->inicio->chave->ios[filaDiscoIO->inicio->chave->proxIO].tempoExecRestante--;
+				decrementarTemposFila(filaDiscoIO);
 	    } 
 
 		// Fila
 	    if (filaImpressoraIO->inicio != NULL){
 
 			//se o tempo de execução do I/O for 0, retornamos o processo para a fila de alta prioridade
-		    if(filaImpressoraIO->inicio->chave->ios[filaImpressoraIO->inicio->chave->proxIO].tempoExecRestante == 0) {
+		    while(filaImpressoraIO->inicio->chave->ios[filaImpressoraIO->inicio->chave->proxIO].tempoExecRestante == 0) {
 			    filaImpressoraIO->inicio->chave->proxIO++;
 			    inserirFila(filaAltaP, removerFila(filaImpressoraIO));
 				printf("Processo %d saiu do IO tipo IMPRESSORA, entrou na fila de Alta Prioridade\n", filaAltaP->fim->chave->PID);
+
+				if(filaImpressoraIO->inicio == NULL) break;
 		    }
 
 			//se o I/O não tiver acabado, decrementamos 1 de seu tempo
 		    if(filaImpressoraIO->inicio != NULL)
-				filaImpressoraIO->inicio->chave->ios[filaImpressoraIO->inicio->chave->proxIO].tempoExecRestante--;
+				decrementarTemposFila(filaImpressoraIO);
 	    }
 
 		// Fita
 	    if (filaFitaIO->inicio != NULL){
 
 			//se o tempo de execução do I/O for 0, retornamos o processo para a fila de alta prioridade
-		    if(filaFitaIO->inicio->chave->ios[filaFitaIO->inicio->chave->proxIO].tempoExecRestante == 0) {
+		    while(filaFitaIO->inicio->chave->ios[filaFitaIO->inicio->chave->proxIO].tempoExecRestante == 0) {
 			    filaFitaIO->inicio->chave->proxIO++;
 			    inserirFila(filaAltaP, removerFila(filaFitaIO));
 				printf("Processo %d saiu do IO tipo FITA, entrou na fila de Alta Prioridade\n", filaAltaP->fim->chave->PID);
+
+				if(filaFitaIO->inicio == NULL) break;
 		    }
 
 			//se o I/O não tiver acabado, decrementamos 1 de seu tempo
 		    if(filaFitaIO->inicio != NULL)
-				filaFitaIO->inicio->chave->ios[filaFitaIO->inicio->chave->proxIO].tempoExecRestante--;
+				decrementarTemposFila(filaFitaIO);
 	    } 
 
 		// 3. verificar se esse processo sofre preempção no instante t (se sim, entra em Baixa Prioridade)
-		if (processoEmExecucao != NULL && t - inicioQuantum >= TIME_SLICE){
+		if (processoEmExecucao != NULL && t - inicioQuantum >= tam_quantum){
 			printf("Processo %d sofreu preempcao (quantum iniciado em %d)\n", processoEmExecucao->PID, inicioQuantum);
 			inserirFila(filaBaixaP, processoEmExecucao);
 			processoEmExecucao = NULL;
