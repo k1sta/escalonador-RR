@@ -15,7 +15,7 @@ O projeto é composto pelos seguintes arquivos:
 - [`leitura.c`](leitura.c): Contém as funções para leitura dos processos a partir de arquivos de entrada.
 - [`impressao.c`](impressao.c): Contém as funções para impressão do estado das filas e dos processos.
 - [`universal.h`](universal.h): Cabeçalho com as definições das estruturas e funções utilizadas no projeto.
-- [`input1.txt`](input1.txt), [`input2.txt`](input2.txt), [`input3.txt`](input3.txt), [`input4r.txt`](input4r.txt): Arquivos de entrada com os dados dos processos a serem simulados.
+- [`input1.txt`](input1.txt), [`input2.txt`](input2.txt), [`input3.txt`](input3.txt), [`input4.txt`](input4r.txt), [`input5.txt`](input5.txt): Arquivos de entrada com os dados dos processos a serem simulados.
 - [`README.md`](README.md): Este arquivo de descrição do projeto.
 
 ## Compilação e Execução
