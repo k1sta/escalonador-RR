@@ -6,6 +6,14 @@
 
 #define TAM_MAX_LINHA 256
 
+
+// Função auxiliar para realizar o sort dos IO's
+int compararIOs(const void* a, const void* b) {
+    IO* ioA = (IO*)a;
+    IO* ioB = (IO*)b;
+    return (ioA->inicio - ioB->inicio);
+}
+
 //função para contagem de Processos no arquivo input
 //conta as linhas do arquivo e diminui 3, pois temos 2 cabeçalhos 
 //e uma linha para input dos tempos de cada tipo de I/O
@@ -92,6 +100,8 @@ int lerProcessos(const char* arqNome, Processo** processos, int numProcessos){
                 for (int k = 0; k < 2; k++) 
                     linha_io = strchr(linha_io, ' ') + 1;
             }
+
+            qsort((*processos)[i].ios, numIO, sizeof(IO), compararIOs);
 
         }
         

@@ -48,6 +48,8 @@ void decrementarTemposFila(FILA *f);
 
 // funções para a leitura 
 
+int compararIOs(const void* a, const void* b);
+
 int contarProcessos(const char* arqNome);
 
 int lerProcessos(const char* arqNome, Processo** processos, int numProcessos);
