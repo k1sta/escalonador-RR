@@ -40,7 +40,7 @@ int initFila(FILA** f);
 
 bool inserirFila(FILA* f, Processo* chaveNova);
 
-Processo* removerFila(FILA *f);
+Processo* removerProxFila(FILA *f);
 
 void deletarFila(FILA *f);
 

@@ -104,7 +104,7 @@ int main(int argc, char *argv[]) {
 			//se o tempo de execução do I/O for 0, retornamos o processo para a fila de baixa prioridade
 		    while(filaDiscoIO->inicio->chave->ios[filaDiscoIO->inicio->chave->proxIO].tempoExecRestante == 0) {
 			    filaDiscoIO->inicio->chave->proxIO++;
-			    inserirFila(filaBaixaP, removerFila(filaDiscoIO));
+			    inserirFila(filaBaixaP, removerProxFila(filaDiscoIO));
 				printf("-> Processo %d saiu do IO tipo DISCO, entrou na fila de Baixa Prioridade\n", filaBaixaP->fim->chave->PID);
 
 				if(filaDiscoIO->inicio == NULL) break;
@@ -121,7 +121,7 @@ int main(int argc, char *argv[]) {
 			//se o tempo de execução do I/O for 0, retornamos o processo para a fila de alta prioridade
 		    while(filaImpressoraIO->inicio->chave->ios[filaImpressoraIO->inicio->chave->proxIO].tempoExecRestante == 0) {
 			    filaImpressoraIO->inicio->chave->proxIO++;
-			    inserirFila(filaAltaP, removerFila(filaImpressoraIO));
+			    inserirFila(filaAltaP, removerProxFila(filaImpressoraIO));
 				printf("-> Processo %d saiu do IO tipo IMPRESSORA, entrou na fila de Alta Prioridade\n", filaAltaP->fim->chave->PID);
 
 				if(filaImpressoraIO->inicio == NULL) break;
@@ -138,7 +138,7 @@ int main(int argc, char *argv[]) {
 			//se o tempo de execução do I/O for 0, retornamos o processo para a fila de alta prioridade
 		    while(filaFitaIO->inicio->chave->ios[filaFitaIO->inicio->chave->proxIO].tempoExecRestante == 0) {
 			    filaFitaIO->inicio->chave->proxIO++;
-			    inserirFila(filaAltaP, removerFila(filaFitaIO));
+			    inserirFila(filaAltaP, removerProxFila(filaFitaIO));
 				printf("-> Processo %d saiu do IO tipo FITA, entrou na fila de Alta Prioridade\n", filaAltaP->fim->chave->PID);
 
 				if(filaFitaIO->inicio == NULL) break;
@@ -160,12 +160,12 @@ int main(int argc, char *argv[]) {
 	    if (processoEmExecucao == NULL){
 
 			//se não tiver processo em execução, pegamos um da fila de alta prioridade
-			processoEmExecucao = removerFila(filaAltaP);
+			processoEmExecucao = removerProxFila(filaAltaP);
 			if (processoEmExecucao != NULL) printf("-> Processo %d em execucao, vindo da fila alta, com %d segundos restantes\n", processoEmExecucao->PID, processoEmExecucao->tempoExecRestante);
 
 			//se não tiver processo na fila de alta prioridade, pegamos um da fila de baixa prioridade
 			if(processoEmExecucao == NULL) {
-				processoEmExecucao = removerFila(filaBaixaP);
+				processoEmExecucao = removerProxFila(filaBaixaP);
 				if (processoEmExecucao != NULL) printf("-> Processo %d em execucao, vindo da fila baixa, com %d segundos restantes\n", processoEmExecucao->PID, processoEmExecucao->tempoExecRestante);
 			}
 			

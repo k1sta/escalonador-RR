@@ -47,7 +47,7 @@ bool inserirFila(FILA* f, Processo* chaveNova)
 }
 
 // Remover elemento da fila
-Processo* removerFila(FILA *f)
+Processo* removerProxFila(FILA *f)
 {
     //se a fila estiver vazia, acaba função
     if (f->inicio == NULL){
