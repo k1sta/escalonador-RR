@@ -62,9 +62,9 @@ Processo* removerFila(FILA *f)
         f->inicio = aux->prox;
     }
 
-    Processo* pid = aux->chave;
+    Processo* processo = aux->chave;
     free(aux);
-    return pid;
+    return processo;
 }
 
 //deletar fila e liberar espaço de memória

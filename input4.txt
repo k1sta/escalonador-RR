@@ -1,9 +1,9 @@
 Fita, Disco, Impressora
 8 5 3
-PID, Tempo_Entrada, Tempo_Execucao, Qntd_IOs, Tipo_IO, Inicio
-1001 1 8 2 F 3 I 5
-1002 3 5 1 D 2 
-1003 6 4 2 D 1 I 3
-1004 7 7 0
-1005 10 10 2 F 3 I 7
-1006 13 12 4 D 2 F 7 F 10 D 11 
+Tempo_Entrada, Tempo_Execucao, Qntd_IOs, Tipo_IO, Inicio
+1 8 2 F 3 I 5
+3 5 1 D 2 
+6 4 2 D 1 I 3
+7 7 0
+10 10 2 F 3 I 7
+13 12 4 D 2 F 7 F 10 D 11 

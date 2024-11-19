@@ -9,7 +9,7 @@
 //função para contagem de Processos no arquivo input
 //conta as linhas do arquivo e diminui 3, pois temos 2 cabeçalhos 
 //e uma linha para input dos tempos de cada tipo de I/O
-int contarLinhas(const char* arqNome) {
+int contarProcessos(const char* arqNome) {
     FILE* arq = fopen(arqNome, "r");
     if (!arq){
         perror("Erro ao abrir o arquivo");
@@ -58,12 +58,10 @@ int lerProcessos(const char* arqNome, Processo** processos, int numProcessos){
     int i = 0;
 
     while (i < numProcessos && fgets(linha, sizeof(linha), arq)) {
-
-        //printf("Entrando no processo %d\n", i+1); // DEBUG
-
         // Inicializando processo
         int numIO;
-        sscanf(linha, "%d %d %d %d", &((*processos)[i].PID), &((*processos)[i].tempoEntrada), &((*processos)[i].tempoExec), &numIO);
+        (*processos)[i].PID = i + 1;
+        sscanf(linha, "%d %d %d", &((*processos)[i].tempoEntrada), &((*processos)[i].tempoExec), &numIO);
         (*processos)[i].tempoExecRestante = (*processos)[i].tempoExec;
         (*processos)[i].proxIO = 0;
         (*processos)[i].turnaround = -1;
@@ -74,7 +72,7 @@ int lerProcessos(const char* arqNome, Processo** processos, int numProcessos){
         // Pega os IO's do processo no arquivo e os inicializa
         if (numIO){
             char* linha_io = linha;
-            for (int j = 0; j < 4; j++){
+            for (int j = 0; j < 3; j++){
                 linha_io = strchr(linha_io, ' ') + 1;
             }
             for (int j = 0; j < numIO; j++) {
@@ -90,7 +88,6 @@ int lerProcessos(const char* arqNome, Processo** processos, int numProcessos){
                         (*processos)[i].ios[j].tempoExecRestante = tempoIODisco;
                         break;
                 }
-                //printf("%c %d %d\n", (*processos)[i].ios[j].tipo, (*processos)[i].ios[j].inicio, (*processos)[i].ios[j].tempoExecRestante); // DEBUG
 		        
                 for (int k = 0; k < 2; k++) 
                     linha_io = strchr(linha_io, ' ') + 1;

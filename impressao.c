@@ -38,7 +38,7 @@ void imprimirTabelaIO(Processo* processos, int numProcessos) {
 }
 
 //Impressão das filas e seus processos a cada segundo de execução do escalonador
-void printEstadoDaFila(FILA* filaAltaP, FILA* filaBaixaP, FILA* filaDiscoIO, FILA* filaFitaIO, FILA* filaImpressoraIO, Processo* processoEmExecucao) {
+void printEstadoDasFilas(FILA* filaAltaP, FILA* filaBaixaP, FILA* filaDiscoIO, FILA* filaFitaIO, FILA* filaImpressoraIO, Processo* processoEmExecucao) {
     printf("\n\n");
     printf(" _______________________________________________________________________________\n");
     printf("|                              Estado das Filas                                 |\n");

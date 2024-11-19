@@ -60,7 +60,7 @@ int main(int argc, char *argv[]) {
 	
 	
     // Pegando o número de procesos
-    numProcessos = contarLinhas(inputFile);
+    numProcessos = contarProcessos(inputFile);
 	if (numProcessos < 0) {
 		printf("%s", "Erro ao contar linhas do arquivo\n");
 		exit(-1);
@@ -68,9 +68,6 @@ int main(int argc, char *argv[]) {
     
 	// Inicializando estruturas
     inicializarEstruturas(&filaAltaP, &filaBaixaP, &filaDiscoIO, &filaFitaIO, &filaImpressoraIO, &listaProcessos, numProcessos);
-	
-	// Limpando a tela
-	//printf("\e[1;1H\e[2J");
 	
 	// Lendo os processos
 	if (lerProcessos(inputFile, &(listaProcessos), numProcessos) != 0) {
@@ -185,8 +182,8 @@ int main(int argc, char *argv[]) {
             // 5. verificar se esse processo acabou a execução
 		    if (processoEmExecucao->tempoExecRestante == 0){
 
-				printf("Processo %d possui %d segundos restantes de execucao\n", processoEmExecucao->PID, processoEmExecucao->tempoExecRestante);
-				printf("Processo %d concluido\n", processoEmExecucao->PID);
+				printf("-> Processo %d possui %d segundos restantes de execucao\n", processoEmExecucao->PID, processoEmExecucao->tempoExecRestante);
+				printf("-> Processo %d concluido\n", processoEmExecucao->PID);
 
 				//calculando turnaround do processo
 				processoEmExecucao->turnaround = (t+1) - processoEmExecucao->tempoEntrada;
@@ -199,13 +196,10 @@ int main(int argc, char *argv[]) {
 		    }	
 	
 			//Função que printa as filas e seus processos a cada segundo de execução do escalonador
-			printEstadoDaFila(filaAltaP, filaBaixaP, filaDiscoIO, filaFitaIO, filaImpressoraIO, processoEmExecucao);
+			printEstadoDasFilas(filaAltaP, filaBaixaP, filaDiscoIO, filaFitaIO, filaImpressoraIO, processoEmExecucao);
 
 	    	// 6. verificar se esse processo sofre IO no instante n da execução do processo
 			if(processoEmExecucao != NULL){
-				
-				//printf("Processo %d possui %d io's restantes (momento %d do processo)\n", processoEmExecucao->PID, processoEmExecucao->qntdIO - processoEmExecucao->proxIO, processoEmExecucao->tempoExec - processoEmExecucao->tempoExecRestante);
-
 				//se o processo ainda tiver I/O
 				if(processoEmExecucao->qntdIO > processoEmExecucao->proxIO){
 
@@ -236,9 +230,6 @@ int main(int argc, char *argv[]) {
             }	
 
 		}
-		
-		//Função que printa as filas e seus processos a cada segundo de execução do escalonador
-		//printEstadoDaFila(filaAltaP, filaBaixaP, filaDiscoIO, filaFitaIO, filaImpressoraIO, processoEmExecucao);
 
 	    t++;
 		printf("%s", "\n================================================================================\n");
