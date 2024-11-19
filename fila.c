@@ -79,7 +79,7 @@ void deletarFila(FILA *f)
     free(f);
 }
 
-void decrementarTemposFila(FILA *f)
+void decrementarTemposIOFila(FILA *f)
 {
     Elemento* aux = f->inicio;
     while(aux != NULL){

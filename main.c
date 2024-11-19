@@ -112,7 +112,7 @@ int main(int argc, char *argv[]) {
 
 			//se o I/O não tiver acabado, decrementamos 1 de seu tempo
 		    if(filaDiscoIO->inicio != NULL)
-				decrementarTemposFila(filaDiscoIO);
+				decrementarTemposIOFila(filaDiscoIO);
 	    } 
 
 		// Fila
@@ -129,7 +129,7 @@ int main(int argc, char *argv[]) {
 
 			//se o I/O não tiver acabado, decrementamos 1 de seu tempo
 		    if(filaImpressoraIO->inicio != NULL)
-				decrementarTemposFila(filaImpressoraIO);
+				decrementarTemposIOFila(filaImpressoraIO);
 	    }
 
 		// Fita
@@ -146,7 +146,7 @@ int main(int argc, char *argv[]) {
 
 			//se o I/O não tiver acabado, decrementamos 1 de seu tempo
 		    if(filaFitaIO->inicio != NULL)
-				decrementarTemposFila(filaFitaIO);
+				decrementarTemposIOFila(filaFitaIO);
 	    } 
 
 		// 3. verificar se esse processo sofre preempção no instante t (se sim, entra em Baixa Prioridade)

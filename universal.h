@@ -44,7 +44,7 @@ Processo* removerFila(FILA *f);
 
 void deletarFila(FILA *f);
 
-void decrementarTemposFila(FILA *f);
+void decrementarTemposIOFila(FILA *f);
 
 // funções para a leitura 
 
